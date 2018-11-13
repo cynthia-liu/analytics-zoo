@@ -600,15 +600,6 @@ class TestModelLoading(OnnxTestCase):
         output = OnnxLoader.run_node(node, [x])
         np.testing.assert_almost_equal(output["y"], y, decimal=5)
 
-    def test_onnx_concat(self):
-        class Concat(torch.nn.Module):
-            def forward(self, x):
-                return torch.cat([v for v in x], 1)
-
-        pytorch_model = Concat()
-        input_shape_with_batch = [(1, 3), (1, 3)]
-        self.compare_with_pytorch(pytorch_model, input_shape_with_batch)
-
     def test_concat(self):
         test_cases = {
             '1d': ([1, 2],
@@ -631,4 +622,4 @@ class TestModelLoading(OnnxTestCase):
                 )
                 y = np.concatenate(values, i)
                 output = OnnxLoader.run_node(node, [v for v in values])
-                np.testing.assert_almost_equal(output["output"], y, decimal=5)
+                np.testing.assert_almost_equal(output["output"], y, decimal=5) 
